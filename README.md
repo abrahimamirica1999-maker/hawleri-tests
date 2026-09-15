@@ -28,13 +28,17 @@ cached there too, so a reload with no signal still works.
 
 ## Rebuilding items.json
 
-From the `hawler spark` repo (the data is not in this repo):
+`build_items.py` lives here, but its input does not — the course data and the
+converter are in the `hawler spark` app repo. From there:
 
 ```
-python .claude/skills/hawleri-sorani/pull_course.py      # only if the raw pull is stale
-python .claude/skills/hawleri-sorani/convert_pull.py     # Standard -> Hawleri
-python others/build_tests_site_data.py                   # -> others/hawleri-tests/items.json
+python .claude/skills/hawleri-sorani/pull_course.py     # only if the raw pull is stale
+python .claude/skills/hawleri-sorani/convert_pull.py    # Standard -> Hawleri
+python others/hawleri-tests/build_items.py              # -> items.json, beside the script
 ```
+
+With no argument the script looks for the converted CSV in a sibling
+`hawler spark` checkout; pass the CSV's path if it lives somewhere else.
 
 Ids are derived from the Standard text, so a rebuild keeps her saved progress
 and lines up with rows already in the sheet.
