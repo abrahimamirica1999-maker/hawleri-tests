@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="theme-color" content="#A8701F">
+<title>دەقەکانی تاقیکردنەوە</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#EFF2F1; --surface:#FFFFFF; --raise:#F7F9F8;
+  --ink:#16201E; --muted:#5E6D69; --faint:#8B9995;
+  --line:#D4DCD9; --line-strong:#B9C5C1;
+  --accent:#A8701F; --accent-ink:#7A4F12; --accent-soft:#F6E9D5;
+  --done:#2E6B51; --done-soft:#E0EFE7; --on-accent:#FFFFFF;
+  --std:#EFE6F5; --std-line:#C9B5DA; --std-ink:#5A4370;
+  --shadow:0 1px 2px rgba(22,32,30,.06),0 8px 24px rgba(22,32,30,.07);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1614; --surface:#18211F; --raise:#1E2926;
+    --ink:#E7EEEB; --muted:#93A29D; --faint:#74837E;
+    --line:#26332F; --line-strong:#35443F;
+    --accent:#D19B4E; --accent-ink:#E9BE7C; --accent-soft:#2B2216;
+    --done:#6FBF95; --done-soft:#172A21; --on-accent:#1B1206;
+    --std:#241C2E; --std-line:#493A5C; --std-ink:#C6B2DA;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1614; --surface:#18211F; --raise:#1E2926;
+  --ink:#E7EEEB; --muted:#93A29D; --faint:#74837E;
+  --line:#26332F; --line-strong:#35443F;
+  --accent:#D19B4E; --accent-ink:#E9BE7C; --accent-soft:#2B2216;
+  --done:#6FBF95; --done-soft:#172A21; --on-accent:#1B1206;
+  --std:#241C2E; --std-line:#493A5C; --std-ink:#C6B2DA;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Noto Kufi Arabic",system-ui,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.7; -webkit-text-size-adjust:100%;
+}
+[hidden]{display:none!important}
+.wrap{max-width:660px;margin:0 auto;padding-inline:16px;padding-block:0 148px}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+  background:var(--ground);padding-block:12px 8px}
+.toprow{display:flex;align-items:center;gap:10px}
+.brand{font-size:15px;font-weight:700;white-space:nowrap}
+.brand small{display:block;font-size:11px;font-weight:400;color:var(--faint)}
+.count{margin-inline-start:auto;font-size:13px;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap;text-align:end}
+.count b{color:var(--ink);font-size:16px}
+.bar{height:4px;border-radius:99px;background:var(--line);margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;
+  transition:width .25s ease}
+.sync{font-size:11.5px;color:var(--faint);margin-top:6px;min-height:16px}
+.sync.on{color:var(--done)}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:16px;box-shadow:var(--shadow);margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{font-size:11.5px;padding:3px 9px;border-radius:99px;background:var(--raise);
+  color:var(--muted);border:1px solid var(--line);white-space:nowrap}
+.chip.cat{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+.chip.ok{background:var(--done-soft);color:var(--done);border-color:transparent}
+
+.h1{font-size:22px;font-weight:700;line-height:1.45;margin:2px 0 10px}
+.p{color:var(--muted);white-space:pre-line}
+
+/* ---------- section list ---------- */
+.secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;
+  margin-top:12px}
+.sec{text-align:start;font:inherit;cursor:pointer;background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--ink);
+  box-shadow:var(--shadow)}
+.sec:hover{border-color:var(--line-strong)}
+.sec.full{background:var(--done-soft);border-color:transparent}
+.sec.here{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.sec b{display:block;font-size:14px;margin-bottom:5px}
+.sec .sn{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sec .sbar{display:block;height:3px;border-radius:99px;background:var(--line);
+  margin-top:7px;overflow:hidden}
+.sec .sbar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.sec.full .sbar i{background:var(--done)}
+
+/* ---------- one item ---------- */
+.ref{background:var(--accent-soft);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.ref .lbl{font-size:11px;color:var(--accent-ink);font-weight:700;margin-bottom:5px;
+  letter-spacing:.02em}
+.ref .en{direction:ltr;text-align:left;font-family:system-ui,sans-serif;
+  font-size:16.5px;line-height:1.55;color:var(--ink)}
+.ar{background:var(--raise);border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;font-size:14.5px;color:var(--muted);margin-bottom:10px;
+  font-family:"Noto Naskh Arabic","Noto Kufi Arabic",serif}
+.ar .lbl{font-size:11px;color:var(--faint);font-family:"Noto Kufi Arabic",sans-serif;
+  margin-bottom:3px}
+.std{background:var(--std);border-radius:12px;padding:12px 14px;margin-bottom:14px;
+  box-shadow:inset 3px 0 0 var(--std-line)}
+.std .lbl{font-size:11px;color:var(--std-ink);font-weight:700;margin-bottom:5px}
+.std .t{font-size:17px;line-height:1.7;word-wrap:break-word}
+.lbl2{font-size:12px;color:var(--muted);margin-bottom:6px}
+textarea{width:100%;min-height:92px;resize:vertical;border-radius:12px;
+  border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink);
+  padding:12px 14px;font:inherit;font-size:17px;line-height:1.8}
+textarea:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-soft)}
+.hint{font-size:12px;color:var(--faint);margin-top:7px;line-height:1.6}
+
+/* ---------- buttons ---------- */
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button{font:inherit;cursor:pointer;border-radius:12px;padding:11px 16px;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
+button:disabled{opacity:.4;cursor:default}
+button.primary{background:var(--accent);border-color:transparent;color:var(--on-accent);
+  font-weight:700}
+button.good{background:var(--done-soft);border-color:transparent;color:var(--done);
+  font-weight:700}
+button.ghost{background:transparent;border-color:var(--line)}
+button.nav{min-width:52px;font-size:18px;line-height:1}
+
+.foot{position:fixed;inset-inline:0;bottom:0;z-index:30;background:var(--surface);
+  border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.footin{max-width:660px;margin:0 auto;display:flex;gap:8px;align-items:center}
+.footin .primary{flex:1}
+
+dialog{border:0;border-radius:16px;padding:0;background:transparent;max-width:92vw}
+dialog::backdrop{background:rgba(10,16,15,.5)}
+.dlg{background:var(--surface);color:var(--ink);border-radius:16px;padding:18px;
+  box-shadow:var(--shadow);max-width:420px}
+.dlg h3{margin:0 0 8px;font-size:17px}
+.dlg p{margin:0 0 6px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap" style="padding-block:0">
+    <div class="toprow">
+      <div class="brand">دەقەکانی تاقیکردنەوە<small id="label">هەولێری بۆ پێداچوونەوە</small></div>
+      <div class="count" id="count"></div>
+    </div>
+    <div class="bar"><i id="barfill" style="width:0%"></i></div>
+    <div class="sync" id="syncLine"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- intro -->
+  <div id="scIntro" hidden>
+    <div class="card">
+      <div class="h1">سڵاو 🌿</div>
+      <p class="p" id="introText"></p>
+      <div class="btns"><button class="primary" id="btnStart">دەست پێبکە</button></div>
+    </div>
+  </div>
+
+  <!-- section hub -->
+  <div id="scHub" hidden>
+    <div class="card">
+      <div class="h1">بەشەکان</div>
+      <p class="p" id="hubNote"></p>
+      <div class="btns"><button class="primary" id="btnResume"></button></div>
+    </div>
+    <div class="secs" id="secList"></div>
+  </div>
+
+  <!-- one item -->
+  <div id="scItem" hidden>
+    <div class="card">
+      <div class="chips" id="itChips"></div>
+      <div class="ref" id="itEnWrap" hidden>
+        <div class="lbl">مانا بە ئینگلیزی</div>
+        <div class="en" id="itEn"></div>
+      </div>
+      <div class="ar" id="itArWrap" hidden>
+        <div class="lbl">بە عەرەبیی عێراقی</div><span id="itAr"></span>
+      </div>
+      <div class="std">
+        <div class="lbl">بە کوردیی ستاندارد</div>
+        <div class="t" id="itStd"></div>
+      </div>
+      <div class="lbl2">بە هەولێری — ئەگەر هەڵەیە ڕاستی بکەوە</div>
+      <textarea id="itKu" spellcheck="false"></textarea>
+      <div class="hint" id="itHint"></div>
+      <div class="btns">
+        <button class="good" id="btnOk">ڕاستە ✓</button>
+        <button class="ghost" id="btnHub">لیستی بەشەکان</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- section finished -->
+  <div id="scSec" hidden>
+    <div class="card">
+      <div class="h1" id="secTitle"></div>
+      <p class="p" id="secNote"></p>
+      <div class="btns">
+        <button class="primary" id="btnNextSec">بەشی دواتر</button>
+        <button class="ghost" id="btnSecHub">لیستی بەشەکان</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- all finished -->
+  <div id="scDone" hidden>
+    <div class="card">
+      <div class="h1">تەواو بوو 🌿</div>
+      <p class="p">زۆر سوپاس. هەموو شتێک پارێزراوە و نێردراوە.</p>
+      <div class="btns">
+        <button class="primary" id="btnSend2">دووبارە بینێرە</button>
+        <button class="ghost" id="btnDoneHub">لیستی بەشەکان</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="footin">
+    <button class="nav ghost" id="btnPrev" aria-label="پێشوو">→</button>
+    <button class="primary" id="btnNext">دواتر</button>
+    <button class="nav ghost" id="btnSend" aria-label="ناردن">↑</button>
+  </div>
+</div>
+
+<dialog id="dlgSend"><div class="dlg">
+  <h3>ناردن</h3>
+  <p id="sendWarn"></p>
+  <div class="btns">
+    <button class="primary" id="doSend">بینێرە</button>
+    <button class="ghost" id="doAll">هەمووی بنێرەوە</button>
+    <button class="ghost" id="doCopy">کۆپی بکە</button>
+    <button class="ghost" id="doClose">داخستن</button>
+  </div>
+</div></dialog>
+
+<script>
+/* ────────────────────────────────────────────────────────────────────────────
+   The unit here is ONE test string, not a conversation. She sees my Hawleri
+   draft already in the box, the Standard Sorani it came from, and the English
+   and Iraqi Arabic when the course has them (1,030 of the 2,325 rows do).
+   "ڕاستە" confirms my draft unchanged; anything else she types replaces it.
+
+   2,325 items is far too many for one list, so they are cut into sections of
+   50, ordered by learner exposure — the most-used strings first, so the work is
+   worth something even if she stops a third of the way in.
+
+   Sync sends only what changed since the last acknowledged push (st.pend);
+   re-posting all 2,325 rows on every move would be absurd. The Apps Script
+   upserts on item_id, so a row sent twice is not a duplicate, and
+   "هەمووی بنێرەوە" re-sends everything if a push was ever lost.
+   ──────────────────────────────────────────────────────────────────────────── */
+var SHEET_URL="PASTE_EXEC_URL_HERE";
+var QCACHE="hawleri_tests_items", AR="٠١٢٣٤٥٦٧٨٩";
+var lastPush=0, pushTimer=null, saveTimer=null;
+var DATA=null, ITEMS=[], PER=50, NSEC=0, BATCH="", LABEL="", KEY="";
+var st={v:"intro",cur:0,ans:{},pend:{},sent:0,synced:0,dev:""};
+
+function fa(n){return String(n).replace(/\d/g,function(x){return AR[+x]})}
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+function saveSoon(){clearTimeout(saveTimer);saveTimer=setTimeout(save,300)}
+
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){var p=JSON.parse(raw);
+      st.v=p.v||"intro"; st.cur=p.cur||0; st.ans=p.ans||{}; st.pend=p.pend||{};
+      st.sent=p.sent||0; st.synced=p.synced||0; st.dev=p.dev||"";}
+  }catch(e){}
+  if(!st.dev) st.dev="d"+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+  if(!(st.cur>=0)||st.cur>=ITEMS.length) st.cur=0;
+}
+
+/* ---- helpers ---- */
+function sec(i){return Math.floor(i/PER)}
+function secStart(s){return s*PER}
+function secEnd(s){return Math.min(secStart(s)+PER,ITEMS.length)}
+function answered(id){return !!(st.ans[id]&&st.ans[id].trim())}
+function filled(){var n=0;for(var k in st.ans){if((st.ans[k]||"").trim())n++}return n}
+function secFilled(s){
+  var n=0,e=secEnd(s);
+  for(var i=secStart(s);i<e;i++) if(answered(ITEMS[i].id)) n++;
+  return n;
+}
+function pendCount(){var n=0;for(var k in st.pend)n++;return n}
+function firstOpen(){
+  for(var i=0;i<ITEMS.length;i++) if(!answered(ITEMS[i].id)) return i;
+  return -1;
+}
+
+/* ---- rendering ---- */
+function renderHub(){
+  var f=filled(), left=ITEMS.length-f, o=firstOpen();
+  $("hubNote").textContent = f
+    ? "لە "+fa(ITEMS.length)+" دەق، "+fa(f)+"ت تەواو کردووە. "+fa(left)+" ماوە."
+    : "هەموو "+fa(ITEMS.length)+" دەقەکە لە "+fa(NSEC)+" بەشدا دابەشکراون، "+
+      "هەر بەشێک "+fa(PER)+" دەق. گرنگترینەکان لە سەرەتان.";
+  $("btnResume").textContent = o<0 ? "هەمووی تەواو بووە ✓"
+    : (f ? "بەردەوام بە لە دەقی "+fa(o+1) : "دەست پێبکە");
+  $("btnResume").disabled = o<0;
+  var h=[];
+  for(var s=0;s<NSEC;s++){
+    var n=secFilled(s), t=secEnd(s)-secStart(s), pc=Math.round(100*n/t);
+    h.push('<button class="sec'+(n===t?" full":"")+(s===sec(st.cur)?" here":"")+
+      '" data-s="'+s+'">'+
+      '<b>بەشی '+fa(s+1)+(n===t?' ✓':'')+'</b>'+
+      '<span class="sn">'+fa(n)+' لە '+fa(t)+'</span>'+
+      '<span class="sbar"><i style="width:'+pc+'%"></i></span></button>');
+  }
+  $("secList").innerHTML=h.join("");
+  var bs=$("secList").getElementsByTagName("button");
+  for(var k=0;k<bs.length;k++) bs[k].onclick=function(){
+    var s=+this.getAttribute("data-s"), e=secEnd(s), go=secStart(s);
+    for(var i=secStart(s);i<e;i++){ if(!answered(ITEMS[i].id)){go=i;break} }
+    st.cur=go; st.v="item"; save(); render(); window.scrollTo(0,0);
+  };
+}
+function renderItem(){
+  var it=ITEMS[st.cur], s=sec(st.cur), a=(st.ans[it.id]||"").trim();
+  $("itChips").innerHTML=
+    '<span class="chip cat">بەشی '+fa(s+1)+' لە '+fa(NSEC)+'</span>'+
+    '<span class="chip">دەقی '+fa(st.cur-secStart(s)+1)+' لە '+fa(secEnd(s)-secStart(s))+'</span>'+
+    (it.u?'<span class="chip">'+esc(it.u)+'</span>':'')+
+    (a?'<span class="chip ok">تەواو ✓</span>':'');
+  $("itEnWrap").hidden=!it.en; if(it.en) $("itEn").textContent=it.en;
+  $("itArWrap").hidden=!it.ar; if(it.ar) $("itAr").textContent=it.ar;
+  $("itStd").textContent=it.s;
+  $("itKu").value=a||it.d;
+  $("itHint").textContent = a
+    ? "پێشتر وەڵامت داوەتەوە. دەتوانی بیگۆڕی."
+    : (it.d===it.s
+        ? "ئەمن نەمگۆڕیوە — وام زانیوە لە هەولێریش هەر بەم شێوەیە دەڵێن. ئەگەر بە جۆرێکی تر دەڵێن، بیگۆڕە."
+        : "ئەمە ئەوەیە ئەمن گۆڕیومە. ئەگەر ڕاستە، «ڕاستە ✓» لێ بدە.");
+  $("btnNext").textContent = (st.cur+1>=secEnd(s)) ? "کۆتایی بەش" : "دواتر";
+}
+function renderSec(){
+  var s=sec(st.cur), n=secFilled(s), t=secEnd(s)-secStart(s);
+  $("secTitle").textContent="بەشی "+fa(s+1)+" تەواو بوو";
+  $("secNote").textContent = n<t
+    ? "لەم بەشەدا "+fa(n)+" لە "+fa(t)+" دەق تەواو بووە. دەتوانی بگەڕێیەوە و ئەوانی تریش تەواو بکەی."
+    : "هەموو "+fa(t)+" دەقەکەی ئەم بەشە تەواو بوون. زۆر سوپاس 🌿";
+  $("btnNextSec").hidden = s+1>=NSEC;
+}
+function render(){
+  $("scIntro").hidden=st.v!=="intro";
+  $("scHub").hidden=st.v!=="hub";
+  $("scItem").hidden=st.v!=="item";
+  $("scSec").hidden=st.v!=="sec";
+  $("scDone").hidden=st.v!=="done";
+  var isItem=st.v==="item";
+  $("btnNext").hidden=!isItem;
+  $("btnPrev").hidden=!isItem;
+  $("btnPrev").disabled=st.cur<=0;
+  if(st.v==="hub") renderHub();
+  if(isItem) renderItem();
+  if(st.v==="sec") renderSec();
+  if(st.v==="intro") $("introText").textContent=(DATA&&DATA.intro)||"";
+  var f=filled();
+  $("count").innerHTML="<b>"+fa(f)+"</b> / "+fa(ITEMS.length);
+  $("barfill").style.width=(ITEMS.length?Math.round(100*f/ITEMS.length):0)+"%";
+  save();
+}
+
+/* ---- movement ---- */
+function commit(){
+  if(st.v!=="item") return;
+  var it=ITEMS[st.cur], v=$("itKu").value.trim();
+  if(!v) return;
+  // The box arrives pre-filled with my draft, so paging past an item must NOT
+  // count as her approving it -- that would ship my machine output to the sheet
+  // as native-speaker-confirmed text. Only an edit, or "ڕاستە ✓", is an answer.
+  if(v===it.d&&!answered(it.id)) return;
+  if(v!==st.ans[it.id]){ st.ans[it.id]=v; st.pend[it.id]=1 }
+}
+function goItem(d){
+  commit();
+  var s=sec(st.cur), n=st.cur+d;
+  if(n<0) n=0;
+  if(n>=secEnd(s)){
+    st.v = (secEnd(s)>=ITEMS.length) ? "done" : "sec";
+    save(); push(true); render(); window.scrollTo(0,0); return;
+  }
+  st.cur=n; save(); push(); render(); window.scrollTo(0,0);
+}
+function toHub(){commit();st.v="hub";save();push();render();window.scrollTo(0,0)}
+
+/* ---- payload ---- */
+function rowOf(it,i){
+  var a=(st.ans[it.id]||"").trim();
+  return {id:it.id,n:i+1,unit:it.u||"",occ:it.n,en:it.en||"",ar:it.ar||"",
+          std:it.s,draft:it.d,answer:a,changed:(a===it.d?"no":"yes"),conf:it.c};
+}
+function rows(all){
+  var out=[];
+  for(var i=0;i<ITEMS.length;i++){
+    var it=ITEMS[i];
+    if(!answered(it.id)) continue;
+    if(!all&&!st.pend[it.id]) continue;
+    out.push(rowOf(it,i));
+  }
+  return out;
+}
+function payload(r){
+  return JSON.stringify({device:st.dev,batch:BATCH,at:new Date().toISOString(),rows:r});
+}
+function csv(){
+  var r=[["batch","item_id","item_no","unit","occurrences","english","arabic",
+          "standard_sorani","my_hawleri","her_hawleri","changed","confidence"]];
+  var R=rows(true);
+  for(var k=0;k<R.length;k++){
+    r.push([BATCH,R[k].id,R[k].n,R[k].unit,R[k].occ,R[k].en,R[k].ar,
+            R[k].std,R[k].draft,R[k].answer,R[k].changed,R[k].conf]);
+  }
+  return r.map(function(x){return x.map(function(c){
+    c=String(c); return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c
+  }).join(",")}).join("\r\n");
+}
+function stamp(){
+  if(!st.synced) return "";
+  var d=new Date(st.synced);
+  function two(x){return (x<10?"0":"")+x}
+  var p=pendCount();
+  return "دوایین ناردن "+two(d.getHours())+":"+two(d.getMinutes())+
+         (p?" — "+fa(p)+" چاوەڕێی ناردنە":"");
+}
+function push(force,all){
+  if(!SHEET_URL||SHEET_URL.indexOf("PASTE_")===0) return;
+  if(!force&&Date.now()-lastPush<4000){
+    clearTimeout(pushTimer); pushTimer=setTimeout(function(){push(true)},4000); return;
+  }
+  var sending=rows(!!all); if(!sending.length) return;
+  lastPush=Date.now();
+  var line=$("syncLine"); line.className="sync"; line.textContent="…ناردن";
+  fetch(SHEET_URL,{method:"POST",mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload(sending)
+  }).then(function(){
+    for(var k=0;k<sending.length;k++) delete st.pend[sending[k].id];
+    st.synced=Date.now(); save();
+    line.className="sync on"; line.textContent="نێردرا ✓";
+    setTimeout(function(){line.className="sync";line.textContent=stamp()},2500);
+  }).catch(function(){
+    line.className="sync"; line.textContent="ئینتەرنێت نییە — لە مۆبایلەکەت پارێزراوە";
+  });
+}
+function beacon(){
+  if(!SHEET_URL||SHEET_URL.indexOf("PASTE_")===0) return;
+  var sending=rows(false); if(!sending.length) return;
+  try{
+    if(navigator.sendBeacon){
+      var body=new Blob([payload(sending)],{type:"text/plain;charset=utf-8"});
+      if(navigator.sendBeacon(SHEET_URL,body)){
+        for(var k=0;k<sending.length;k++) delete st.pend[sending[k].id];
+        st.synced=Date.now(); save();
+      }
+    }
+  }catch(e){}
+}
+function openSend(){
+  var f=filled(), p=pendCount();
+  $("sendWarn").textContent = p
+    ? "لە "+fa(ITEMS.length)+" دەق، "+fa(f)+"ت تەواو کردووە. "+fa(p)+" هێشتا نەنێردراوە."
+    : (f ? "هەموو ئەوەی تەواوت کردووە ("+fa(f)+") نێردراوە ✓"
+         : "هێشتا هیچ وەڵامێک نییە.");
+  $("dlgSend").showModal();
+}
+
+/* ---- events ---- */
+function bind(){
+  $("btnStart").onclick=function(){st.v="hub";save();render();window.scrollTo(0,0)};
+  $("btnResume").onclick=function(){
+    var o=firstOpen(); if(o>=0) st.cur=o;
+    st.v="item"; save(); render(); window.scrollTo(0,0);
+  };
+  $("btnNext").onclick=function(){goItem(1)};
+  $("btnPrev").onclick=function(){goItem(-1)};
+  $("btnHub").onclick=toHub;
+  $("btnSecHub").onclick=toHub;
+  $("btnDoneHub").onclick=toHub;
+  $("btnNextSec").onclick=function(){
+    var s=sec(st.cur)+1;
+    if(s>=NSEC){st.v="done"} else {st.cur=secStart(s); st.v="item"}
+    save(); render(); window.scrollTo(0,0);
+  };
+  $("btnSend").onclick=openSend;
+  $("btnSend2").onclick=openSend;
+  $("doClose").onclick=function(){$("dlgSend").close()};
+  $("doSend").onclick=function(){push(true);$("dlgSend").close()};
+  $("doAll").onclick=function(){push(true,true);$("dlgSend").close()};
+  $("doCopy").onclick=function(){
+    var b=$("doCopy"), t=csv();
+    function ok(){b.textContent="کۆپی کرا ✓";st.sent=Date.now();save();
+      setTimeout(function(){b.textContent="کۆپی بکە"},2000)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(ok,function(){fallback(t,ok)});
+    }else fallback(t,ok);
+  };
+  function fallback(t,ok){
+    var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);
+    a.select();try{document.execCommand("copy");ok()}catch(e){}
+    document.body.removeChild(a);
+  }
+  $("itKu").addEventListener("input",function(){commit();saveSoon()});
+  $("btnOk").onclick=function(){
+    if(st.v!=="item") return;
+    var it=ITEMS[st.cur];
+    if(!$("itKu").value.trim()) $("itKu").value=it.d;
+    var v=$("itKu").value.trim();
+    if(v!==st.ans[it.id]){ st.ans[it.id]=v; st.pend[it.id]=1 }
+    goItem(1);
+  };
+  window.addEventListener("pagehide",function(){commit();save();beacon()});
+  document.addEventListener("visibilitychange",function(){
+    if(document.visibilityState==="hidden"){commit();save();beacon()}
+  });
+}
+
+/* ---- boot ---- */
+function boot(data){
+  DATA=data;
+  ITEMS=data.items||[];
+  PER=data.per||50; NSEC=Math.ceil(ITEMS.length/PER);
+  BATCH=data.batch||"tests-all"; LABEL=data.label||"";
+  KEY="hawleri_tests_v1:"+BATCH;
+  try{localStorage.setItem(QCACHE,JSON.stringify(data))}catch(e){}
+  load(); bind(); render();
+  if(LABEL) $("label").textContent=LABEL;
+  $("syncLine").textContent=stamp();
+  push(true);
+}
+function fail(){
+  $("scIntro").hidden=false;
+  $("introText").textContent="نەتوانرا دەقەکان باربکرێن. تکایە ئینتەرنێت بپشکنە و لاپەڕەکە تازە بکەرەوە.";
+  $("btnStart").hidden=true;
+  $("btnNext").hidden=true; $("btnPrev").hidden=true;
+}
+fetch("items.json?v="+Date.now()).then(function(r){
+  if(!r.ok) throw 0; return r.json();
+}).then(boot).catch(function(){
+  try{
+    var c=localStorage.getItem(QCACHE);
+    if(c){boot(JSON.parse(c));return}
+  }catch(e){}
+  fail();
+});
+</script>
+</body>
+</html>
